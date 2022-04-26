@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-image: linear-gradient(rgb(126, 146, 143), rgb(63, 68, 63));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .form {
+        width: 90%;
+        max-width: 500px;
+      }
+
+      .form__field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+
+      .form__field label {
+        font-size: 1.3rem;
+        font-weight: 500;
+      }
+
+      .form__field input,
+      .form__field textarea {
+        outline: none;
+        border: 1px solid rgba(0, 0, 0, 0.6);
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 5px;
+      }
+
+      .btndiv {
+        display: flex;
+        margin: 10px 0;
+      }
+
+      .btn {
+        width: 100%;
+        border: 1px solid purple;
+        background-color: purple;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="form">
+      <div class="form__field">
+        <label for="">Full Name</label>
+        <input type="text" class="fullName" />
+      </div>
+      <div class="form__field">
+        <label for="">Email</label>
+        <input type="email" class="email" />
+      </div>
+      <div class="form__field">
+        <label for="">Message</label>
+        <textarea rows="10" class="message"></textarea>
+      </div>
+      <div class="btndiv">
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </form>
+
+    <script>
+      const fullName = document.querySelector(".fullName");
+      const email = document.querySelector(".email");
+      const message = document.querySelector(".message");
+      const form = document.querySelector(".form");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const payload = {
+          fullName: fullName.value,
+          email: email.value,
+          message: message.value,
+        };
+
+        fetch("https://contact-mailer-form.herokuapp.com/api/contact", {
+          method: "post",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
+          .then((res) => res.json)
+          .then((res) => console.log(res));
+      });
+    </script>
+  </body>
+</html>
